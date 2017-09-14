@@ -9,3 +9,5 @@ OkHttpClient().enqueue(requestDirection(location, target, ACCESS_TOKEN, walking)
     }
 }
 ```
+
+after building it in androidStudio it can be installed to mvn-repo with ```gradlew assembleRelease publish```
