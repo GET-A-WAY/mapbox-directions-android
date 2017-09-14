@@ -1,0 +1,90 @@
+group 'com.get_a_way.android'
+version '0.1-SNAPSHOT'
+
+buildscript {
+    ext {
+        plugin_version = "3.0.0-beta5"
+        kotlin_version = "1.1.4-3"
+        jackson_version = "2.7.5"
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "${System.env.HOME}/.m2/repository" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$plugin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:3.0.0-beta2'
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:5.1.3@aar') {
+        transitive = true
+    }
+    compile "com.squareup.okhttp3:okhttp:3.8.1"
+    compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    testCompile "junit:junit:4.12"
+    testCompile "com.winterbe:expekt:0.5.0"
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName version
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.get-a-way.android'
+            artifactId 'mapbox-directions-android'
+            version '0.5'
+            artifact("$buildDir/outputs/aar/mapbox-directions-android-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
+    }
+}
+
+
