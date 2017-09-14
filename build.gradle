@@ -76,7 +76,7 @@ publishing {
         bar(MavenPublication) {
             groupId 'com.get-a-way.android'
             artifactId 'mapbox-directions-android'
-            version '0.5'
+            version '0.7'
             artifact("$buildDir/outputs/aar/mapbox-directions-android-release.aar")
         }
     }
@@ -86,5 +86,3 @@ publishing {
         }
     }
 }
-
-
