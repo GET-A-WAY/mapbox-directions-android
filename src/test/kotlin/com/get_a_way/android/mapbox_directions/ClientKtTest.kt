@@ -16,7 +16,6 @@ class ClientKtTest {
 
 
     @Test
-    @Ignore
     fun requestpoliline() {
         val requestDirection = requestDirection(location, target, accessToken)
         val polyline = okHttpClient.execute(requestDirection)
